@@ -79,31 +79,39 @@ def weather_page():
 
 def financial_page():
     st.header("Dados Financeiros")
-    
-
-    dates = pd.date_range(start="2023-01-01", periods=30, freq="D")
-    kpis = ["IPCA", "IGPM", "Taxa Tr", "Cambio"]
-    data = []
-    np.random.seed(42)
-    for kpi in kpis:
-        for d in dates:
-            data.append({
-                "date": d,
-                "value": np.random.uniform(0, 100),
-                "label": kpi
-            })
-    df = pd.DataFrame(data)
-
     col1, col2 = st.columns(2)
-    for i, kpi in enumerate(kpis):
-        df_kpi = df[df["label"] == kpi]
-        fig = px.line(df_kpi, x="date", y="value", title=kpi,
-                      labels={"date": "Data", "value": kpi})
-        if i % 2 == 0:
-            col1.plotly_chart(fig, use_container_width=True)
-        else:
-            col2.plotly_chart(fig, use_container_width=True)
+    df1 = pd.read_csv("data_dumps/ipca-utf.csv",sep = ';')
+    
+    df1['data'] = pd.to_datetime(df1['data'], format='%d/%m/%Y').dt.strftime('%Y-%m-%d')
+    df1 = df1.sort_values(by='data')
+    df1['data'] = pd.to_datetime(df1['data'])
+    with col1:
+        fig10 = px.line(df1, x="data", y="value",labels = "label", title='Ipca + forecast', color = "label").update_layout(
+        xaxis_title="Data", yaxis_title="Percentual"
+    )
+        col1.plotly_chart(fig10, use_container_width=True)
+    
+    df1 = pd.read_csv("data_dumps/igpm-utf.csv",sep = ';')
+    df1['data'] = pd.to_datetime(df1['data'], format='%d/%m/%Y').dt.strftime('%Y-%m-%d')
+    df1 = df1.sort_values(by='data')
+    df1['data'] = pd.to_datetime(df1['data'])
+    with col1:
+        fig10 = px.line(df1, x="data", y="value",labels = "label", title='Igpm + forecast', color = "label").update_layout(
+        xaxis_title="Data", yaxis_title="Percentual"
+        )
+        col1.plotly_chart(fig10, use_container_width=True)
 
+    df1 = pd.read_csv("data_dumps/cambio-utf.csv",sep = ';')
+    df1['data'] = pd.to_datetime(df1['data'], format='%d/%m/%Y').dt.strftime('%Y-%m-%d')
+    df1 = df1.sort_values(by='data')
+    df1['data'] = pd.to_datetime(df1['data'])
+    with col1:
+        fig10 = px.line(df1, x="data", y="value",labels = "label", title='Cambio + forecast', color = "label").update_layout(
+        xaxis_title="Data", yaxis_title="Percentual"
+        )
+        col1.plotly_chart(fig10, use_container_width=True)
+    
+    
 
 def grid_page():
     st.header("Dados da Rede Elétrica")
