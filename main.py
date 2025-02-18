@@ -91,25 +91,36 @@ def financial_page():
     )
         col1.plotly_chart(fig10, use_container_width=True)
     
-    df1 = pd.read_csv("data_dumps/igpm-utf.csv",sep = ';')
-    df1['data'] = pd.to_datetime(df1['data'], format='%d/%m/%Y').dt.strftime('%Y-%m-%d')
-    df1 = df1.sort_values(by='data')
-    df1['data'] = pd.to_datetime(df1['data'])
-    with col1:
-        fig10 = px.line(df1, x="data", y="value",labels = "label", title='Igpm + forecast', color = "label").update_layout(
-        xaxis_title="Data", yaxis_title="Percentual"
-        )
-        col1.plotly_chart(fig10, use_container_width=True)
+        df1 = pd.read_csv("data_dumps/igpm-utf.csv",sep = ';')
+        df1['data'] = pd.to_datetime(df1['data'], format='%d/%m/%Y').dt.strftime('%Y-%m-%d')
+        df1 = df1.sort_values(by='data')
+        df1['data'] = pd.to_datetime(df1['data'])
+        with col1:
+            fig10 = px.line(df1, x="data", y="value",labels = "label", title='Igpm + forecast', color = "label").update_layout(
+            xaxis_title="Data", yaxis_title="Percentual"
+            )
+            col1.plotly_chart(fig10, use_container_width=True)
 
-    df1 = pd.read_csv("data_dumps/cambio-utf.csv",sep = ';')
-    df1['data'] = pd.to_datetime(df1['data'], format='%d/%m/%Y').dt.strftime('%Y-%m-%d')
-    df1 = df1.sort_values(by='data')
-    df1['data'] = pd.to_datetime(df1['data'])
-    with col1:
-        fig10 = px.line(df1, x="data", y="value",labels = "label", title='Cambio + forecast', color = "label").update_layout(
-        xaxis_title="Data", yaxis_title="Percentual"
-        )
-        col1.plotly_chart(fig10, use_container_width=True)
+    with col2:
+        df1 = pd.read_csv("data_dumps/cambio-utf.csv",sep = ';')
+        df1['data'] = pd.to_datetime(df1['data'], format='%d/%m/%Y').dt.strftime('%Y-%m-%d')
+        df1 = df1.sort_values(by='data')
+        df1['data'] = pd.to_datetime(df1['data'])
+        with col1:
+            fig10 = px.line(df1, x="data", y="value",labels = "label", title='Cambio + forecast', color = "label").update_layout(
+            xaxis_title="Data", yaxis_title="Percentual"
+            )
+            col2.plotly_chart(fig10, use_container_width=True)
+
+        df1 = pd.read_csv("data_dumps/taxatr-utf.csv",sep = ';')
+        df1['data'] = pd.to_datetime(df1['data'], format='%d/%m/%Y').dt.strftime('%Y-%m-%d')
+        df1 = df1.sort_values(by='data')
+        df1['data'] = pd.to_datetime(df1['data'])
+        with col1:
+            fig10 = px.line(df1, x="data", y="value",labels = "label", title='TaxaTr + forecast', color = "label").update_layout(
+            xaxis_title="Data", yaxis_title="Percentual"
+            )
+            col2.plotly_chart(fig10, use_container_width=True)
     
     
 
